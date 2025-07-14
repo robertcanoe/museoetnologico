@@ -1,11 +1,119 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+// src/pages/index.astro
+import Layout from '@/layouts/Layout.astro';
+import Hero from '@/components/hero.astro';
 ---
 
 <Layout>
-	<Welcome />
+  <Hero
+    title="Museo Etnológico de Almodóvar del Río"
+    subtitle="Descubre la riqueza cultural y la historia de nuestra tierra"
+    image="/images/hero-bg.jpg"
+  />
+
+  <nav class="nav-sticky">
+    <ul>
+      <li><a href="#sobre">Sobre el museo</a></li>
+      <li><a href="#coleccion">Colección</a></li>
+      <li><a href="#exposiciones">Exposiciones</a></li>
+      <li><a href="#actividades">Actividades</a></li>
+      <li><a href="#visitanos">Visítanos</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
+  </nav>
+
+  <section id="sobre" class="sobre fadein">
+    <h2>Sobre el museo</h2>
+    <p>
+      El Museo Etnológico de Almodóvar del Río es un espacio dedicado a preservar y difundir la memoria, las tradiciones y la vida cotidiana de nuestro pueblo y su entorno. Descubre herramientas, objetos, fotografías y relatos que te transportarán a otra época.
+    </p>
+  </section>
+
+  <section id="coleccion" class="coleccion fadein">
+    <h2>Colección destacada</h2>
+    <div class="coleccion__grid">
+      <div class="card">
+        <img src="/images/card1.jpg" alt="Arado antiguo" />
+        <h3>Arado antiguo</h3>
+        <p>Herramienta agrícola tradicional utilizada en el campo cordobés.</p>
+      </div>
+      <div class="card">
+        <img src="/images/card2.jpg" alt="Vasija de barro" />
+        <h3>Vasija de barro</h3>
+        <p>Ejemplo de la alfarería local, pieza clave en la vida cotidiana rural.</p>
+      </div>
+      <div class="card">
+        <img src="/images/card3.jpg" alt="Fotografía histórica" />
+        <h3>Fotografía histórica</h3>
+        <p>Instantánea de una fiesta popular de principios del siglo XX.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="exposiciones" class="sobre fadein">
+    <h2>Exposiciones</h2>
+    <p>
+      Consulta nuestras exposiciones permanentes y temporales, con detalles de cada muestra, fechas y actividades asociadas. Muy pronto, toda la información estará disponible aquí.
+    </p>
+  </section>
+
+  <section id="actividades" class="sobre fadein">
+    <h2>Actividades</h2>
+    <p>
+      Talleres, visitas guiadas, charlas y eventos para todas las edades. Descubre la programación cultural y educativa del museo.
+    </p>
+  </section>
+
+  <section id="visitanos" class="visitanos fadein">
+    <h2>Visítanos</h2>
+    <p>
+      <strong>Dirección:</strong> CC-431, 14720 Almodóvar del Río, Córdoba<br />
+      <strong>Horario:</strong> Lunes a domingo: 10:30 - 20:00
+    </p>
+    <div class="visitanos__mapa">
+      <iframe title="Mapa Museo Etnológico de Almodóvar del Río" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3156.641123456789!2d-5.0078649!3d37.8158512!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd6d2ba4d429df33%3A0x72146820629fafae!2sMuseo%20Etnol%C3%B3gico%20de%20Almod%C3%B3var%20del%20R%C3%ADo!5e0!3m2!1ses!2ses!4v1720897382938!5m2!1ses!2ses" width="100%" height="250" style="border:0; border-radius: 12px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+  </section>
+
+  <section id="contacto" class="sobre fadein">
+    <h2>Contacto</h2>
+    <p>
+      ¿Tienes dudas, sugerencias o quieres concertar una visita? Escríbenos a <a href="mailto:info@museoetnologico.es">info@museoetnologico.es</a> o llámanos al <a href="tel:+34950000000">950 000 000</a>.
+    </p>
+  </section>
 </Layout>
+
+<script>
+// Scroll suave para navegación sticky
+if (typeof window !== 'undefined') {
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.nav-sticky a').forEach(link => {
+      link.addEventListener('click', function(e) {
+        const hash = this.getAttribute('href');
+        if (hash.startsWith('#')) {
+          const target = document.querySelector(hash);
+          if (target) {
+            e.preventDefault();
+            target.scrollIntoView({ behavior: 'smooth' });
+          }
+        }
+      });
+    });
+
+    // Fade-in animado para secciones
+    const observer = new window.IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      },
+      { threshold: 0.15 }
+    );
+    document.querySelectorAll('.fadein').forEach(el => {
+      observer.observe(el);
+    });
+  });
+}
+</script>
