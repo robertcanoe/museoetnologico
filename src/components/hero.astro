@@ -1,0 +1,30 @@
+---
+// src/components/Hero.astro
+
+const { title, subtitle, image } = Astro.props;
+---
+
+<section class="hero" style={`background-image: url(${image});`}>
+  <div class="hero__content">
+    <h1>{title}</h1>
+    <p>{subtitle}</p>
+    <a href="#sobre" class="hero__cta">Descubre el Museo</a>
+  </div>
+</section>
+<script>
+  // Scroll suave al hacer click en el CTA
+  if (typeof window !== 'undefined') {
+    document.addEventListener('DOMContentLoaded', () => {
+      const cta = document.querySelector('.hero__cta');
+      if (cta) {
+        cta.addEventListener('click', function(e) {
+          const target = document.getElementById('sobre');
+          if (target) {
+            e.preventDefault();
+            target.scrollIntoView({ behavior: 'smooth' });
+          }
+        });
+      }
+    });
+  }
+</script>
